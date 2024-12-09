@@ -3,6 +3,7 @@
   become: true
   roles:
     - role: dnsmasq
+      tags: dns
 
 - name: Deploy RKE2 Servers
   hosts: masters

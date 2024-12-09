@@ -29,6 +29,7 @@
     name: dnsmasq
     state: started
     enabled: true
+  become: true
 
 - name: Allow DNS traffic in firewall
   ansible.builtin.firewalld:
