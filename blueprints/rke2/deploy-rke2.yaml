@@ -4,6 +4,10 @@
   roles:
     - role: dnsmasq
       tags: dns
+  vars_prompt:
+    - name: ansible_become_password
+      prompt: "Enter sudo password"
+      private: yes
 
 - name: Deploy RKE2 Servers
   hosts: masters

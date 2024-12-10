@@ -2,6 +2,7 @@
   ansible.builtin.yum:
     name: '*'
     state: latest
+  become: true
 
 - name: Install basic tools
   ansible.builtin.yum:
