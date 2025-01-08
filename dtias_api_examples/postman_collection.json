@@ -1,0 +1,876 @@
+{
+	"info": {
+		"_postman_id": "62e262c3-3210-4d3b-8dcf-aa28c26c1a2e",
+		"name": "DTIAS API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15446296"
+	},
+	"item": [
+		{
+			"name": "Create Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"grant_type\": \"password\",\r\n  \"client_id\": \"ccpapi\",\r\n  \"username\": \"admin\",\r\n  \"password\": \"Dell0SS!\",\r\n  \"refreshtoken\": \"dummy-refresh-token\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.96/identity/v1/tenant/Fulcrum/token/create",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"96"
+					],
+					"path": [
+						"identity",
+						"v1",
+						"tenant",
+						"Fulcrum",
+						"token",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Job Search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://{{dtias_ip}}/v1/tenants/default_tenant/search/job",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"search",
+						"job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Folder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{dtias_ip}}/v1/tenants/default_tenant/fs/folders/bmo-licenses",
+					"protocol": "http",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"fs",
+						"folders",
+						"bmo-licenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload License",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "licensefile",
+							"type": "file",
+							"src": "/C:/Users/derrbm1/Downloads/XML_License_202402011521.xml"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{dtias_ip}}/api/v1/tenant/metalweaver/resources/licenses",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tenant",
+						"metalweaver",
+						"resources",
+						"licenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate License",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://{{dtias_ip}}/api/v1/tenant/metalweaver/resources/licenses/XML_License_202402011521.xml/activate",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tenant",
+						"metalweaver",
+						"resources",
+						"licenses",
+						"XML_License_202402011521.xml",
+						"activate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Server",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"apiVersion\": \"mw.dell.com/v2\",\r\n  \"kind\": \"Server\",\r\n  \"metadata\": {\r\n    \"name\": \"real-server\",\r\n    \"labels\" : {\"site\": \"gc-site\"\r\n    }\r\n  },\r\n  \"spec\": {\r\n    \"bmcEndPoint\": \"https://10.239.6.148\",\r\n    \"username\": \"root\",\r\n    \"password\": \"Dell0SS!\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{dtias_ip}}/api/v1/tenant/default_tenant/resources/servers",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tenant",
+						"default_tenant",
+						"resources",
+						"servers"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Server",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"apiVersion\": \"mw.dell.com/v2\",\r\n  \"kind\": \"Server\",\r\n  \"metadata\": {\r\n    \"name\": \"real-server\",\r\n    \"labels\" : {\"site\": \"gc-site\"\r\n    }\r\n  },\r\n  \"spec\": {\r\n    \"bmcEndPoint\": \"https://10.239.6.148\",\r\n    \"username\": \"root\",\r\n    \"password\": \"Dell0SS!\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dtias_ip}}/api/v1/tenant/metalweaver/resources/servers/r740",
+							"protocol": "https",
+							"host": [
+								"{{dtias_ip}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"tenant",
+								"metalweaver",
+								"resources",
+								"servers",
+								"r740"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 10 Jul 2024 17:31:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000; includeSubDomains"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"metadata\": {\n        \"name\": \"r740\",\n        \"namespace\": \"metalweaver\",\n        \"uid\": \"3eec9ecd-83dc-4f89-93ae-da87805b3092\",\n        \"resourceVersion\": \"1301688\",\n        \"generation\": 4,\n        \"creationTimestamp\": \"2024-07-10T13:13:48Z\",\n        \"labels\": {\n            \"profile\": \"osinstall2\",\n            \"site\": \"gc\"\n        },\n        \"finalizers\": [\n            \"server.mw.dell.com\"\n        ],\n        \"managedFields\": [\n            {\n                \"manager\": \"mw-hardware-controller\",\n                \"operation\": \"Update\",\n                \"apiVersion\": \"mw.dell.com/v2\",\n                \"time\": \"2024-07-10T13:15:27Z\",\n                \"fieldsType\": \"FieldsV1\",\n                \"fieldsV1\": {\n                    \"f:metadata\": {\n                        \"f:labels\": {\n                            \"f:profile\": {}\n                        }\n                    },\n                    \"f:spec\": {\n                        \"f:operatingsystemconfig\": {\n                            \"f:bootMenuOption\": {},\n                            \"f:configdata\": {},\n                            \"f:configtype\": {},\n                            \"f:installVolumeTypeOrder\": {},\n                            \"f:minimumDiskSize\": {}\n                        },\n                        \"f:operatingsystemname\": {}\n                    }\n                }\n            },\n            {\n                \"manager\": \"mw-server-controller\",\n                \"operation\": \"Update\",\n                \"apiVersion\": \"mw.dell.com/v2\",\n                \"time\": \"2024-07-10T14:29:58Z\",\n                \"fieldsType\": \"FieldsV1\",\n                \"fieldsV1\": {\n                    \"f:status\": {\n                        \"f:command\": {},\n                        \"f:transactionStatus\": {\n                            \"f:transactionProgress\": {}\n                        }\n                    }\n                }\n            },\n            {\n                \"manager\": \"mw-api-svc\",\n                \"operation\": \"Update\",\n                \"apiVersion\": \"mw.dell.com/v2\",\n                \"time\": \"2024-07-10T14:41:53Z\",\n                \"fieldsType\": \"FieldsV1\",\n                \"fieldsV1\": {\n                    \"f:metadata\": {\n                        \"f:labels\": {\n                            \".\": {},\n                            \"f:site\": {}\n                        }\n                    },\n                    \"f:spec\": {\n                        \".\": {},\n                        \"f:audit\": {\n                            \".\": {},\n                            \"f:action\": {},\n                            \"f:scan\": {},\n                            \"f:status\": {\n                                \".\": {},\n                                \"f:compliant\": {},\n                                \"f:drift\": {\n                                    \".\": {},\n                                    \"f:coreCount\": {},\n                                    \"f:firmwareVersion\": {},\n                                    \"f:hwModel\": {}\n                                },\n                                \"f:state\": {}\n                            }\n                        },\n                        \"f:bios\": {\n                            \".\": {},\n                            \"f:attributes\": {}\n                        },\n                        \"f:bmc\": {},\n                        \"f:bmcEndPoint\": {},\n                        \"f:bmcLogForward\": {\n                            \".\": {},\n                            \"f:eventSubscriptions\": {}\n                        },\n                        \"f:boot\": {},\n                        \"f:decommission\": {},\n                        \"f:factoryReset\": {},\n                        \"f:installedOsConfig\": {},\n                        \"f:location\": {\n                            \".\": {},\n                            \"f:partLocation\": {},\n                            \"f:placement\": {},\n                            \"f:postalAddress\": {}\n                        },\n                        \"f:managed\": {},\n                        \"f:metadata\": {},\n                        \"f:metric\": {},\n                        \"f:operatingsystemconfig\": {\n                            \".\": {},\n                            \"f:networkingDetails\": {\n                                \".\": {},\n                                \"f:ipAddressDetails\": {}\n                            }\n                        },\n                        \"f:password\": {},\n                        \"f:raid\": {\n                            \".\": {},\n                            \"f:raidConversion\": {\n                                \".\": {},\n                                \"f:convertTo\": {}\n                            }\n                        },\n                        \"f:userName\": {}\n                    }\n                }\n            },\n            {\n                \"manager\": \"mw-server-controller\",\n                \"operation\": \"Update\",\n                \"apiVersion\": \"mw.dell.com/v2\",\n                \"time\": \"2024-07-10T15:53:54Z\",\n                \"fieldsType\": \"FieldsV1\",\n                \"fieldsV1\": {\n                    \"f:status\": {\n                        \"f:FailureBackOffTimeToRetry\": {},\n                        \"f:errors\": {},\n                        \"f:failureRetries\": {},\n                        \"f:state\": {},\n                        \"f:transactionStatus\": {\n                            \"f:transactionID\": {},\n                            \"f:transactionState\": {}\n                        }\n                    }\n                },\n                \"subresource\": \"status\"\n            }\n        ]\n    },\n    \"spec\": {\n        \"bmcEndPoint\": \"https://10.239.7.5\",\n        \"userName\": \"root\",\n        \"password\": \"mw-r740-gc-cm9vda-spec-secret\",\n        \"operatingsystemname\": \"rhelos\",\n        \"operatingsystemconfig\": {\n            \"configtype\": \"kickstart\",\n            \"configdata\": \"# set language\\nlang en_US\\n\\n# set keyboard layout\\nkeyboard us\\n\\n# set timezone\\ntimezone America/New_York --isUtc\\n\\n# set root password, if --iscrypted is not used then clear text can be used\\nrootpw DellOSS! --iscrypted\\n\\n# create non-root user\\nuser --name=bmo --uid=1000 --groups=bmo --gid=1000 --password=Dell0SS! --iscrypted\\n\\n# performs a reboot after installation\\nreboot\\n\\n# runs text based installation instead of gui based\\ntext\\n\\n# installation from type cdrom, harddrive, nfs, liveimg, url\\ncdrom\\n\\n# Initializes any invalid partition tables that are found on disks and destroys all of the contents of disks with invalid partition tables. \\n# This command is required when performing an installation on an IBM Z system with unformatted Direct Access Storage Device (DASD) disks, \\n# otherwise the unformatted disks are not formatted and used during the installation.\\nzerombr\\n\\n# Removes partitions from the system, prior to creation of new partitions. By default, no partitions are removed.\\nclearpart --all --initlabel\\n\\n# Automatically creates partitions: a root (/) partition (1 GB or larger), a swap partition, \\n# and an appropriate /boot partition for the architecture. On large enough drives (50 GB and larger), this also creates a /home partition.\\nautopart\\n\\n# Configures network information for the target system and activates network devices in the installation environment.\\n# The device specified in the first network command is activated automatically.\\n# If the --bootproto=static, then provide osIP, gatewayIP, netmaskIP, nameserverIP and MAC address.\\n# For ipv6 configuration use --ipv6 --ipv6gateway options, and to disable IPv6 on this device use --noipv6 option\\n#network --hostname={{.OSNetworkingDetails.HostName}} --bootproto=static --ip=<osIP> --gateway=<gatewayIP> --netmask=<netmaskIP> --nameserver=\\\"<nameserverIP>\\\" --device=\\\"<MAC>\\\"\\nnetwork --hostname={{.OSNetworkingDetails.HostName}} --bootproto=dhcp\\n\\n# System authorization information\\nauth --passalgo=sha512 --useshadow\\n\\n# Sets the state of SELinux on the installed system. The default SELinux policy is enforcing.\\nselinux --disable\\n\\n# Specify the firewall configuration for the installed system.\\nfirewall --enabled\\n\\n# If skipx is present, X-Server is not configured on the installed system.\\nskipx\\n\\n# Determine whether the Initial Setup application starts the first time the system is booted. \\n# If enabled, the initial-setup package must be installed.\\nfirstboot --enable\\n\\n###################################################################################################\\n# Section below this should not be edited for a successful RHEL installation \\n###################################################################################################\\n\\n%pre\\n#!/bin/sh\\n\\ntouch /tmp/rhel-install\\nSASADDRESS={{.SASAddress}}\\nTARGET={{.Target}}\\nSERIALNUMBER={{.SerialNumber}}\\nDEVICETYPE={{.DeviceType}}\\nDEVICENAME=\\\"\\\"\\nOSHOSTNAME={{.OSNetworkingDetails.HostName}} \\nGROUP=\\\"$(vgs --noheadings | awk '{print $1}')\\\"\\n# removing volume group if one exists\\nif ! [ -z \\\"$GROUP\\\" ]; then\\nvgremove -f -y $GROUP\\nfi\\n\\n# wipe drives section\\n# clearpart cannot clear existing bios raid configurations.\\n# adding wipefs -a will remove that configuration\\nDISKS=\\\"$(lsblk | grep disk | awk '{print $1}')\\\"\\nfor DISK in $DISKS; do\\n echo \\\"wiping signature from disk: $DISK\\\"\\n  wipefs -a /dev/$DISK\\ndone\\n\\ncase $DEVICETYPE in\\n  \\\"nvme\\\") DEVICENAME=\\\"$(ls -al /dev/disk/by-id/ | grep $SERIALNUMBER | awk '{print $11}' | cut -c 7- | head -n 1)\\\"\\n\\t\\t  echo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  ;;\\n  \\\"raid\\\") if [[ $PICKFIRSTVOLUME == \\\"Yes\\\" ]]; then\\n\\t\\t\\tDEVICENAME=\\\"$(smartctl --scan | awk '{print $1}' | head -n 1)\\\"\\n\\t\\t\\techo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  else\\n\\t\\t\\tPCI=\\\"$(lspci | grep -i 'RAID bus controller')\\\"\\n\\t\\t\\t# For series 11 PERC controller\\n\\t\\t\\tif [[ $PCI == *\\\"12GSAS/PCIe Secure\\\"* ]]; then\\n\\t\\t\\t  TARGET=\\\"$((TARGET - 128))\\\"\\n\\t\\t\\tfi\\n\\t\\t\\tPCISLOT=\\\"$(echo $PCI | awk '{print $1}')\\\"\\n\\t\\t\\tDEVICENAME=\\\"$(ls -al /dev/disk/by-path/ | awk -F ${PCISLOT} '{print $2}' | awk -F: -v var=\\\"$TARGET\\\" '{ if($3 == var && $4 !~ \\\"part\\\") print $4 }'  | awk -F\\\\/ '{print $3}')\\\"\\n\\t\\t\\tDEVICENAME=\\\"/dev/$DEVICENAME\\\"\\n\\t\\t\\techo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  fi\\n\\t\\t  ;;\\n   \\\"usb\\\") DEVICENAME=\\\"$(ls -al /dev/disk/by-id | grep usb | awk '{print $11}' | cut -c 7- | head -n 1)\\\"\\n\\t\\t  echo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  ;;\\n\\t\\\"hba\\\") PCI=\\\"$(lspci | grep -i sas | awk '{print $1}')\\\"\\n\\t\\t  DEVICENAME=\\\"$(ls -al /sys/block | grep $PCI | head -n 1 | awk '{print $9}' )\\\"\\n\\t\\t  echo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  ;;\\n  \\\"boss\\\") DEVICENAME=\\\"$(ls -al /dev/disk/by-id/ | grep BOSS-N1 | awk '{print $11}' | cut -c 7- | head -n 1)\\\"\\n\\t\\t  if [[ -z $DEVICENAME ]]; then\\n\\t\\t\\tDEVICENAME=\\\"$(ls -al /dev/disk/by-id/ | grep -i ata | awk '{print $11}' | cut -c 7- | head -n 1)\\\"\\n\\t\\t  fi\\n\\t\\t  echo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  ;;\\n  \\\"s150\\\") DEVICENAME=\\\"$(ls -al /dev/disk/by-id/ | grep -i md-name | awk '{print $11}' | cut -c 7- | head -n 1)\\\"\\n\\t\\t  echo \\\"ignoredisk --only-use=$DEVICENAME\\\" >> /tmp/rhel-install\\n\\t\\t  ;;\\nesac\\n%end\\n\\n%include /tmp/rhel-install\\n\\n%post\\n\\ngrubby --update-kernel=ALL --args=\\\"console=tty0 console=ttyS1,115200\\\"\\n\\n/usr/sbin/grub2-mkconfig -o /boot/efi/EFI/redhat/grub.cfg\\n\\n# Give sudoless password for bmo user for network bond operations\\necho \\\"Cmnd_Alias NETWORK_BOND = /usr/bin/systemctl, /usr/bin/nmcli\\\" >> /etc/sudoers\\necho \\\"bmo ALL=(ALL) NOPASSWD: NETWORK_BOND\\\" >> /etc/sudoers\\n\\ncat > /usr/lib/systemd/system/install_complete.service << EOF\\n\\n[Unit]\\n\\nDescription=Install Complete\\n\\nAfter=systemd-firstboot.target systemd-journald.service\\n\\n[Service]\\n\\nOSHOSTNAME={{.OSNetworkingDetails.HostName}}\\n\\nType=oneshot\\n\\nUser=root\\n\\nRemainAfterExit=No\\n\\nExecStart=/usr/bin/sh -c 'sleep 5m'\\nExecStart=/usr/bin/sh -c 'echo \\\"sol_verify_complete\\\" > /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'printf \\\"bmo_driver_details \\\" >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'printf \\\"bmo_driver_details \\\" >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'printf \\\"bmo_ip_details_delimiter \\\" >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'ip -4 addr |egrep \\\"en[a-z][0-9]+|eth[0-9]+\\\" | grep \\\"inet\\\" | cut -d \\\" \\\" -f 12 >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'printf \\\":\\\"  >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'hostname -I|cut -d\\\" \\\" -f 1 >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'printf \\\" bmo_ip_details_delimiter\\\" >> /dev/kmsg'\\nExecStart=/usr/bin/sh -c 'sudo hostnamectl set-hostname $OSHOSTNAME '\\nExecStart=/usr/bin/sh -c 'cat $OSHOSTNAME >> /etc/hostname'\\n\\nEOF\\n\\n/usr/bin/ln -sf /usr/lib/systemd/system/install_complete.service /usr/lib/systemd/system/default.target.wants/install_complete.service\\n\\n%end\\n\\n%packages\\n\\n@^minimal-environment\\n\\nkexec-tools\\n\\n%end\",\n            \"installVolumeTypeOrder\": [\n                {\n                    \"type\": \"RAID\",\n                    \"name\": \"virtdsk1\"\n                },\n                {\n                    \"type\": \"NVME\"\n                },\n                {\n                    \"type\": \"SDCARD\"\n                },\n                {\n                    \"type\": \"HBA\"\n                },\n                {\n                    \"type\": \"BOSS\"\n                }\n            ],\n            \"networkingDetails\": {\n                \"ipAddressDetails\": {}\n            },\n            \"bootMenuOption\": \"2\",\n            \"minimumDiskSize\": 500\n        },\n        \"bios\": {\n            \"attributes\": {}\n        },\n        \"boot\": {},\n        \"bmc\": [\n            {\n                \"ntpSettings\": {},\n                \"bmcUsers\": {},\n                \"attributes\": {\n                    \"ipmiLanEnable\": \"Enabled\",\n                    \"serialRedirectEnable\": \"Enabled\"\n                }\n            }\n        ],\n        \"decommission\": {},\n        \"raid\": {\n            \"raidConversion\": {\n                \"convertTo\": \"None\"\n            }\n        },\n        \"audit\": {\n            \"scan\": \"none\",\n            \"action\": \"deny\",\n            \"status\": {\n                \"compliant\": true,\n                \"state\": \"none\",\n                \"drift\": {\n                    \"firmwareVersion\": {},\n                    \"coreCount\": {},\n                    \"hwModel\": {}\n                }\n            }\n        },\n        \"metric\": {},\n        \"metadata\": {},\n        \"location\": {\n            \"partLocation\": {},\n            \"placement\": {},\n            \"postalAddress\": {}\n        },\n        \"factoryReset\": {},\n        \"installedOsConfig\": {},\n        \"managed\": true,\n        \"bmcLogForward\": {\n            \"eventSubscriptions\": {}\n        }\n    },\n    \"status\": {\n        \"powerstate\": \"On\",\n        \"state\": \"Failed\",\n        \"command\": \"OsInstall\",\n        \"transactionStatus\": {\n            \"transactionState\": \"CompletedWithErrors\",\n            \"transactionID\": \"db924bf8-8c47-4eed-a863-a61919d4111c\",\n            \"transactionProgress\": \"(OsInstall)\"\n        },\n        \"serialNumber\": \"MXFC40026G00V2\",\n        \"model\": \"PowerEdge R740\",\n        \"manufacturer\": \"Dell Inc.\",\n        \"status\": {\n            \"health\": \"OK\",\n            \"state\": \"Enabled\"\n        },\n        \"sku\": \"1S1Y9R3\",\n        \"processors\": [\n            {\n                \"description\": \"Represents the properties of a Processor attached to this System\",\n                \"id\": \"CPU.Socket.2\",\n                \"instructionSet\": \"x86-64\",\n                \"manufacturer\": \"Intel\",\n                \"maxSpeedMHz\": 4000,\n                \"model\": \"Intel(R) Xeon(R) Platinum 8260 CPU @ 2.40GHz\",\n                \"name\": \"CPU 2\",\n                \"processorArchitecture\": \"x86\",\n                \"processorID\": {\n                    \"effectiveFamily\": \"6\",\n                    \"effectiveModel\": \"85\",\n                    \"identificationRegisters\": \"0x00050657\",\n                    \"microcodeInfo\": \"0x5003302\",\n                    \"step\": \"7\",\n                    \"vendorID\": \"GenuineIntel\"\n                },\n                \"processorType\": \"CPU\",\n                \"socket\": \"CPU.Socket.2\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"totalCores\": 24,\n                \"totalThreads\": 48,\n                \"FPGA\": {}\n            },\n            {\n                \"description\": \"Represents the properties of a Processor attached to this System\",\n                \"id\": \"CPU.Socket.1\",\n                \"instructionSet\": \"x86-64\",\n                \"manufacturer\": \"Intel\",\n                \"maxSpeedMHz\": 4000,\n                \"model\": \"Intel(R) Xeon(R) Platinum 8260 CPU @ 2.40GHz\",\n                \"name\": \"CPU 1\",\n                \"processorArchitecture\": \"x86\",\n                \"processorID\": {\n                    \"effectiveFamily\": \"6\",\n                    \"effectiveModel\": \"85\",\n                    \"identificationRegisters\": \"0x00050657\",\n                    \"microcodeInfo\": \"0x5003302\",\n                    \"step\": \"7\",\n                    \"vendorID\": \"GenuineIntel\"\n                },\n                \"processorType\": \"CPU\",\n                \"socket\": \"CPU.Socket.1\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"totalCores\": 24,\n                \"totalThreads\": 48,\n                \"FPGA\": {}\n            }\n        ],\n        \"memory\": [\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA643A\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM B3\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.B3\",\n                \"description\": \"DIMM B3\",\n                \"deviceLocator\": \"DIMM B3\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA6441\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM A1\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.A1\",\n                \"description\": \"DIMM A1\",\n                \"deviceLocator\": \"DIMM A1\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA6588\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM B6\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.B6\",\n                \"description\": \"DIMM B6\",\n                \"deviceLocator\": \"DIMM B6\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA643F\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM A6\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.A6\",\n                \"description\": \"DIMM A6\",\n                \"deviceLocator\": \"DIMM A6\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA6440\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM A4\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.A4\",\n                \"description\": \"DIMM A4\",\n                \"deviceLocator\": \"DIMM A4\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA643B\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM B2\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.B2\",\n                \"description\": \"DIMM B2\",\n                \"deviceLocator\": \"DIMM B2\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA643E\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM A5\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.A5\",\n                \"description\": \"DIMM A5\",\n                \"deviceLocator\": \"DIMM A5\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA6421\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM B5\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.B5\",\n                \"description\": \"DIMM B5\",\n                \"deviceLocator\": \"DIMM B5\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"49019056\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"M393A8G40BB4-CWE\",\n                \"manufacturer\": \"Samsung\",\n                \"name\": \"DIMM A3\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.A3\",\n                \"description\": \"DIMM A3\",\n                \"deviceLocator\": \"DIMM A3\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA6425\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM B1\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.B1\",\n                \"description\": \"DIMM B1\",\n                \"deviceLocator\": \"DIMM B1\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"13FA6424\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM B4\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.B4\",\n                \"description\": \"DIMM B4\",\n                \"deviceLocator\": \"DIMM B4\"\n            },\n            {\n                \"rankCount\": 2,\n                \"capacityMiB\": 65536,\n                \"volatileSizeMiB\": 65536,\n                \"operatingSpeedMhz\": 2933,\n                \"busWidthBits\": 72,\n                \"dataWidthBits\": 64,\n                \"allowedSpeedMHz\": [\n                    3200\n                ],\n                \"serialNumber\": \"75B1AB99\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"operatingMemoryModes\": [\n                    \"Volatile\"\n                ],\n                \"partNumber\": \"HMAA8GR7CJR4N-XN\",\n                \"manufacturer\": \"Hynix Semiconductor\",\n                \"name\": \"DIMM A2\",\n                \"memoryType\": \"DRAM\",\n                \"baseModuleType\": \"RDIMM\",\n                \"errorCorrection\": \"MultiBitECC\",\n                \"memoryDeviceType\": \"DDR4\",\n                \"id\": \"DIMM.Socket.A2\",\n                \"description\": \"DIMM A2\",\n                \"deviceLocator\": \"DIMM A2\"\n            }\n        ],\n        \"storage\": [\n            {\n                \"id\": \"RAID.Slot.4-1\",\n                \"name\": \"PERC H750 Adapter\",\n                \"description\": \"RAID Controller in Slot 4\",\n                \"storageControllers\": [\n                    {\n                        \"name\": \"PERC H750 Adapter\",\n                        \"memberId\": \"0\",\n                        \"firmwareVersion\": \"52.16.1-4405\",\n                        \"manufacturer\": \"DELL\",\n                        \"model\": \"PERC H750 Adapter\",\n                        \"supportedControllerProtocols\": [\n                            \"PCIe\"\n                        ],\n                        \"supportedRaidtypes\": [\n                            \"RAID0\",\n                            \"RAID1\",\n                            \"RAID5\",\n                            \"RAID6\",\n                            \"RAID10\",\n                            \"RAID50\",\n                            \"RAID60\"\n                        ],\n                        \"supportedDeviceProtocols\": [\n                            \"SAS\",\n                            \"SATA\"\n                        ],\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5f4ee0803b7ea800\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"cacheSummary\": {\n                            \"totalCacheSizeMiB\": 8192\n                        },\n                        \"speedGbps\": 12\n                    }\n                ],\n                \"drives\": [\n                    {\n                        \"id\": \"Disk.Bay.0:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:0\",\n                        \"description\": \"Disk 0 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee6fd5f5\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23K-0254-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6FTTY\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.2:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:2\",\n                        \"description\": \"Disk 2 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee708f2d\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23K-04FG-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 2,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6G25N\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.6:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:6\",\n                        \"description\": \"Disk 6 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee60b409\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23D-0415-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 6,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6EVJR\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.7:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:7\",\n                        \"description\": \"Disk 7 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee7014b1\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23L-01ZK-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 7,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6G4K4\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.3:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:3\",\n                        \"description\": \"Disk 3 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee5fe195\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23D-036G-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 3,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6EQ7Y\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.1:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:1\",\n                        \"description\": \"Disk 1 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee6f37a5\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23K-03TS-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 1,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6G5S1\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.5:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:5\",\n                        \"description\": \"Disk 5 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee6ccc85\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23J-00V1-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 5,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM5X4QL\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    },\n                    {\n                        \"id\": \"Disk.Bay.4:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                        \"name\": \"Physical Disk 0:1:4\",\n                        \"description\": \"Disk 4 in Backplane 1 of RAID Controller in Slot 4\",\n                        \"encryptionAbility\": \"None\",\n                        \"encryptionStatus\": \"Unencrypted\",\n                        \"hotspareType\": \"None\",\n                        \"identifiers\": [\n                            {\n                                \"durableName\": \"5000c500ee6f3085\",\n                                \"durableNameFormat\": \"NAA\"\n                            }\n                        ],\n                        \"manufacturer\": \"SEAGATE\",\n                        \"mediaType\": \"HDD\",\n                        \"model\": \"DL2400MM0159\",\n                        \"capableSpeedGbs\": 12,\n                        \"negotiatedSpeedGbs\": 12,\n                        \"partNumber\": \"CN-0RWR8F-SGW00-23K-04QV-A03\",\n                        \"physicalLocation\": {\n                            \"partLocation\": {\n                                \"locationOrdinalValue\": 4,\n                                \"locationType\": \"Slot\"\n                            },\n                            \"placement\": {},\n                            \"postalAddress\": {}\n                        },\n                        \"protocol\": \"SAS\",\n                        \"revision\": \"ST5A\",\n                        \"rotationSpeedRPM\": 10000,\n                        \"serialNumber\": \"WBM6G5XN\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 2399812976640,\n                        \"blockSizeBytes\": 512,\n                        \"volumeIDs\": [\n                            \"Disk.Virtual.239:RAID.Slot.4-1\"\n                        ],\n                        \"volumesCount\": 1\n                    }\n                ],\n                \"slotCount\": 16,\n                \"currentControllerMode\": \"RAID\",\n                \"volumes\": [\n                    {\n                        \"id\": \"Disk.Virtual.239:RAID.Slot.4-1\",\n                        \"name\": \"virtdsk1\",\n                        \"description\": \"Virtual Disk 239 on RAID Controller in Slot 4\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"capacityBytes\": 9599251906560,\n                        \"raidType\": \"RAID60\",\n                        \"encryptionTypes\": [\n                            \"NativeDriveEncryption\"\n                        ],\n                        \"operations\": [\n                            {\n                                \"operationName\": \"Background Initialization\",\n                                \"percentageComplete\": 3\n                            }\n                        ],\n                        \"driveIDs\": [\n                            \"Disk.Bay.0:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.2:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.6:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.7:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.3:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.1:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.5:Enclosure.Internal.0-1:RAID.Slot.4-1\",\n                            \"Disk.Bay.4:Enclosure.Internal.0-1:RAID.Slot.4-1\"\n                        ],\n                        \"drivesCount\": 8,\n                        \"optimumIOSizeBytes\": 262144,\n                        \"blockSizeBytes\": 512,\n                        \"swRaid\": \"No\"\n                    }\n                ]\n            },\n            {\n                \"id\": \"AHCI.Embedded.1-1\",\n                \"name\": \"C620 Series Chipset Family SSATA Controller [AHCI mode]\",\n                \"description\": \"Embedded AHCI 1\",\n                \"storageControllers\": [\n                    {\n                        \"name\": \"C620 Series Chipset Family SSATA Controller [AHCI mode]\",\n                        \"memberId\": \"0\",\n                        \"manufacturer\": \"DELL\",\n                        \"model\": \"C620 Series Chipset Family SSATA Controller [AHCI mode]\",\n                        \"supportedControllerProtocols\": [\n                            \"PCIe\"\n                        ],\n                        \"status\": {\n                            \"state\": \"Enabled\"\n                        },\n                        \"identifiers\": [\n                            {}\n                        ],\n                        \"cacheSummary\": {}\n                    }\n                ],\n                \"currentControllerMode\": \"NotSupported\"\n            },\n            {\n                \"id\": \"AHCI.Embedded.2-1\",\n                \"name\": \"C620 Series Chipset Family SATA Controller [AHCI mode]\",\n                \"description\": \"Embedded AHCI 2\",\n                \"storageControllers\": [\n                    {\n                        \"name\": \"C620 Series Chipset Family SATA Controller [AHCI mode]\",\n                        \"memberId\": \"0\",\n                        \"manufacturer\": \"DELL\",\n                        \"model\": \"C620 Series Chipset Family SATA Controller [AHCI mode]\",\n                        \"supportedControllerProtocols\": [\n                            \"PCIe\"\n                        ],\n                        \"status\": {\n                            \"state\": \"Enabled\"\n                        },\n                        \"identifiers\": [\n                            {}\n                        ],\n                        \"cacheSummary\": {}\n                    }\n                ],\n                \"currentControllerMode\": \"NotSupported\"\n            }\n        ],\n        \"nic\": [\n            {\n                \"networkAdapterId\": \"NIC.Integrated.1\",\n                \"manufacturer\": \"Broadcom Inc. and subsidiaries\",\n                \"version\": \"22.0.6\",\n                \"model\": \"BRCM 2P 1G BT + 2P 10G BT rNDC\",\n                \"partNumber\": \"01224N\",\n                \"serialNumber\": \"VNFCVBA21H023M\",\n                \"networkPorts\": [\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"5C:6F:69:26:DC:EC\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ]\n                            }\n                        ],\n                        \"physicalPortNumber\": \"3\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Integrated.1-3\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"bootOptionROM\": \"Enabled\",\n                            \"bootStrapType\": \"AutoDetect\",\n                            \"wakeOnLan\": \"Disabled\",\n                            \"vLanMode\": \"Disabled\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0\n                        }\n                    },\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"5C:6F:69:26:DC:EF\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ],\n                                \"autoSpeedNegotiation\": true\n                            }\n                        ],\n                        \"physicalPortNumber\": \"2\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Integrated.1-2\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"rDMANICModeOnPort\": \"Disabled\",\n                            \"msixVectorsPerVf\": 16,\n                            \"operationalLnkSpeed\": \"AutoNeg\",\n                            \"dCBX\": \"Disabled\",\n                            \"defaultEVBMode\": \"VEB\",\n                            \"bootOptionROM\": \"Enabled\",\n                            \"bootStrapType\": \"AutoDetect\",\n                            \"wakeOnLan\": \"Enabled\",\n                            \"vLanMode\": \"Disabled\",\n                            \"bootRetryCnt\": \"NoRetry\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0\n                        }\n                    },\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"5C:6F:69:26:DC:EE\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ],\n                                \"autoSpeedNegotiation\": true\n                            }\n                        ],\n                        \"physicalPortNumber\": \"1\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Integrated.1-1\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"PXE\",\n                            \"rDMANICModeOnPort\": \"Disabled\",\n                            \"msixVectorsPerVf\": 16,\n                            \"operationalLnkSpeed\": \"AutoNeg\",\n                            \"dCBX\": \"Disabled\",\n                            \"defaultEVBMode\": \"VEB\",\n                            \"bootOptionROM\": \"Enabled\",\n                            \"bootStrapType\": \"AutoDetect\",\n                            \"wakeOnLan\": \"Enabled\",\n                            \"vLanMode\": \"Disabled\",\n                            \"bootRetryCnt\": \"NoRetry\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0\n                        }\n                    },\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"5C:6F:69:26:DC:ED\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ]\n                            }\n                        ],\n                        \"physicalPortNumber\": \"4\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Integrated.1-4\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"bootOptionROM\": \"Enabled\",\n                            \"bootStrapType\": \"AutoDetect\",\n                            \"wakeOnLan\": \"Disabled\",\n                            \"vLanMode\": \"Disabled\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0\n                        }\n                    }\n                ],\n                \"attributes\": {\n                    \"bannerMessageTimeout\": 5,\n                    \"hideSetupPrompt\": \"Disabled\"\n                }\n            },\n            {\n                \"networkAdapterId\": \"NIC.Slot.1\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"version\": \"20.5.13\",\n                \"model\": \"Intel(R) 25GbE 4P E810-XXV Adptr\",\n                \"partNumber\": \"0VK88G\",\n                \"serialNumber\": \"MYFLMIT27Q014G\",\n                \"networkPorts\": [\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"40:A6:B7:A0:FD:E2\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ]\n                            }\n                        ],\n                        \"physicalPortNumber\": \"3\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Slot.1-3\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"rDMANICModeOnPort\": \"Enabled\",\n                            \"wakeOnLan\": \"NA\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0,\n                            \"numberVFAdvertised\": 64\n                        }\n                    },\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"40:A6:B7:A0:FD:E0\"\n                        ],\n                        \"linkStatus\": \"Up\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    25000\n                                ],\n                                \"autoSpeedNegotiation\": true\n                            }\n                        ],\n                        \"physicalPortNumber\": \"1\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Slot.1-1\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"rDMANICModeOnPort\": \"Enabled\",\n                            \"wakeOnLan\": \"NA\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0,\n                            \"numberVFAdvertised\": 64\n                        }\n                    },\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"40:A6:B7:A0:FD:E1\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ]\n                            }\n                        ],\n                        \"physicalPortNumber\": \"2\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Slot.1-2\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"rDMANICModeOnPort\": \"Enabled\",\n                            \"wakeOnLan\": \"NA\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0,\n                            \"numberVFAdvertised\": 64\n                        }\n                    },\n                    {\n                        \"associatedNetworkAddresses\": [\n                            \"40:A6:B7:A0:FD:E3\"\n                        ],\n                        \"linkStatus\": \"Down\",\n                        \"supportedLinkCapabilities\": [\n                            {\n                                \"linkNetworkTechnology\": \"Ethernet\",\n                                \"capableLinkSpeedMbps\": [\n                                    0\n                                ]\n                            }\n                        ],\n                        \"physicalPortNumber\": \"4\",\n                        \"name\": \"Network Port View\",\n                        \"id\": \"NIC.Slot.1-4\",\n                        \"attributes\": {\n                            \"pxeBootSupport\": \"Supported\",\n                            \"legacyBootProto\": \"NONE\",\n                            \"rDMANICModeOnPort\": \"Enabled\",\n                            \"wakeOnLan\": \"NA\",\n                            \"permitTotalPortShutdown\": \"Disabled\",\n                            \"blnkLeds\": 0,\n                            \"numberVFAdvertised\": 64\n                        }\n                    }\n                ],\n                \"attributes\": {\n                    \"virtualizationMode\": \"NONE\"\n                }\n            }\n        ],\n        \"bios\": {\n            \"id\": \"Bios\",\n            \"name\": \"BIOS Configuration Current Settings\",\n            \"attributes\": {\n                \"systemModelName\": \"PowerEdge R740\",\n                \"systemBiosVersion\": \"2.14.2\",\n                \"systemMeVersion\": \"4.1.4.700\",\n                \"systemServiceTag\": \"1S1Y9R3\",\n                \"systemManufacturer\": \"Dell Inc.\",\n                \"sysMfrContactInfo\": \"www.dell.com\",\n                \"systemCpldVersion\": \"1.1.4\",\n                \"uefiComplianceVersion\": \"2.7\",\n                \"sysMemSize\": \"768 GB\",\n                \"sysMemType\": \"ECC DDR4\",\n                \"sysMemSpeed\": \"2933 Mhz\",\n                \"setBootOrderEn\": \"RAID.Slot.4-1,NIC.PxeDevice.1-1,NIC.PxeDevice.2-1\",\n                \"setBootOrderDis\": \"\",\n                \"bootMode\": \"Uefi\",\n                \"oneTimeBootMode\": \"Disabled\",\n                \"logicalProc\": \"Enabled\",\n                \"procVirtualization\": \"Enabled\",\n                \"procAdjCacheLine\": \"Enabled\",\n                \"procHwPrefetcher\": \"Enabled\",\n                \"dcuStreamerPrefetcher\": \"Enabled\",\n                \"dcuIpPrefetcher\": \"Enabled\",\n                \"subNumaCluster\": \"Disabled\",\n                \"upiPrefetch\": \"Enabled\",\n                \"dynamicCoreAllocation\": \"Disabled\",\n                \"procX2Apic\": \"Enabled\",\n                \"procCores\": \"All\",\n                \"memTest\": \"Disabled\",\n                \"memOpMode\": \"OptimizerMode\",\n                \"procPwrPerf\": \"SysDbpm\",\n                \"memFrequency\": \"MaxPerf\",\n                \"procTurboMode\": \"Enabled\",\n                \"procC1E\": \"Enabled\",\n                \"nodeInterleave\": \"Disabled\",\n                \"corrEccSmi\": \"Enabled\",\n                \"oppSrefEn\": \"Disabled\",\n                \"monitorMwait\": \"Enabled\",\n                \"cpuInterconnectBusLinkPower\": \"Enabled\",\n                \"pcieAspmL1\": \"Enabled\",\n                \"uncoreFrequency\": \"DynamicUFS\",\n                \"energyPerformanceBias\": \"BalancedPerformance\",\n                \"proc1TurboCoreNum\": \"All\",\n                \"proc2TurboCoreNum\": \"All\",\n                \"proc1NumCores\": 24,\n                \"proc2NumCores\": 24,\n                \"memRefreshRate\": \"1x\",\n                \"memPatrolScrub\": \"Standard\",\n                \"procCStates\": \"Enabled\",\n                \"writeDataCrc\": \"Disabled\",\n                \"sriovGlobalEnable\": \"Disabled\",\n                \"serialPortAddress\": \"Com2\",\n                \"serialComm\": \"OnConRedirAuto\",\n                \"extSerialConnector\": \"Serial1\",\n                \"failSafeBaud\": \"115200\",\n                \"conTermType\": \"Vt100Vt220\",\n                \"redirAfterBoot\": \"Enabled\",\n                \"pxeDev1EnDis\": \"Enabled\",\n                \"pxeDev2EnDis\": \"Enabled\",\n                \"pxeDev3EnDis\": \"Disabled\",\n                \"pxeDev4EnDis\": \"Disabled\",\n                \"pxeDev1Interface\": \"NIC.Integrated.1-1-1\",\n                \"pxeDev2Interface\": \"NIC.Integrated.1-1-1\",\n                \"pxeDev3Interface\": \"NIC.Integrated.1-1-1\",\n                \"pxeDev4Interface\": \"NIC.Integrated.1-1-1\",\n                \"llcPrefetch\": \"Disabled\",\n                \"mmioAbove4Gb\": \"Enabled\",\n                \"acPwrRcvry\": \"Last\",\n                \"avxIccpPreGrantLevel\": \"IccpHeavy128\",\n                \"sysProfile\": \"PerfPerWattOptimizedDapc\",\n                \"workloadProfile\": \"NotAvailable\",\n                \"memoryMappedIOH\": \"56TB\",\n                \"tpmSecurity\": \"On\",\n                \"pwrButton\": \"Enabled\",\n                \"inBandManageabilityInterface\": \"Enabled\",\n                \"acPwrRcvryUserDelay\": 60,\n                \"uefiVariableAccess\": \"Standard\",\n                \"acPwrRcvryDelay\": \"Immediate\",\n                \"passwordStatus\": \"Unlocked\",\n                \"bootSeqRetry\": \"Enabled\",\n                \"ceCriticalSEL\": \"Disabled\",\n                \"numLock\": \"On\",\n                \"errPrompt\": \"Enabled\",\n                \"wyseP25BIOSAccess\": \"Enabled\",\n                \"powerCycleRequest\": \"None\",\n                \"deadLineLlcAlloc\": \"Enabled\",\n                \"directoryAtoS\": \"Disabled\",\n                \"securityFreezeLock\": \"Enabled\",\n                \"writeCache\": \"Disabled\",\n                \"embSata\": \"AhciMode\",\n                \"redundantOsLocation\": \"None\",\n                \"dramRefreshDelay\": \"Performance\",\n                \"controlledTurbo\": \"Disabled\",\n                \"forceInt10\": \"Disabled\",\n                \"hddFailover\": \"Disabled\",\n                \"usbPorts\": \"AllOn\",\n                \"internalUsb\": \"On\",\n                \"usbManagedPort\": \"On\",\n                \"ioatEngine\": \"Disabled\",\n                \"embVideo\": \"Enabled\",\n                \"snoopHldOff\": \"Roll2KCycles\",\n                \"osWatchdogTimer\": \"Disabled\",\n                \"pciRootDeviceUnhide\": \"Disabled\",\n                \"autoDiscovery\": \"PlatformDefault\",\n                \"slot1\": \"Enabled\",\n                \"slot2\": \"Enabled\",\n                \"slot3\": \"Enabled\",\n                \"cpuInterconnectBusSpeed\": \"MaxDataRate\"\n            }\n        },\n        \"completeBios\": {\n            \"attributes\": {\n                \"Object\": null\n            }\n        },\n        \"firmware\": [\n            {\n                \"name\": \"Broadcom Adv. Dual 10GBASE-T Ethernet - 5C:6F:69:26:DC:EF\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"22.00.07.60\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Backplane 1\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"2.52\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Broadcom Adv. Dual 10GBASE-T Ethernet - 5C:6F:69:26:DC:EE\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"22.00.07.60\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Broadcom Gigabit Ethernet BCM5720 - 5C:6F:69:26:DC:EC\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"22.00.6\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Broadcom Gigabit Ethernet BCM5720 - 5C:6F:69:26:DC:ED\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"22.00.6\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Intel(R) Ethernet 25G 4P E810-XXV Adapter - 40:A6:B7:A0:FD:E0\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"20.5.13\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Intel(R) Ethernet 25G 4P E810-XXV Adapter - 40:A6:B7:A0:FD:E1\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"20.5.13\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Intel(R) Ethernet 25G 4P E810-XXV Adapter - 40:A6:B7:A0:FD:E2\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"20.5.13\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Intel(R) Ethernet 25G 4P E810-XXV Adapter - 40:A6:B7:A0:FD:E3\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"20.5.13\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"PERC H750 Adapter\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"52.16.1-4405\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"BIOS\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"2.14.2\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Power Supply.Slot.1\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"00.30.C2\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Power Supply.Slot.2\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"00.30.C2\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"OS COLLECTOR, v6.0, A00\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"6.0\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Dell EMC iDRAC Service Module Embedded Package v4.2.0.0, A00\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"4.2.0.0\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 0 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 1 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 2 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 3 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 4 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 5 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 6 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Disk 7 in Backplane 1 of RAID Controller in Slot 4\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"ST5A\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Dell OS Driver Pack, 21.10.01, A00\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"21.10.01\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Integrated Dell Remote Access Controller\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"6.10.30.00\",\n                \"updateable\": true,\n                \"previousVersion\": \"5.10.30.00\"\n            },\n            {\n                \"name\": \"Dell 64 Bit uEFI Diagnostics, version 4301, 4301A70, 4301.71\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"4301A70\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"System CPLD\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"1.1.4\",\n                \"updateable\": true\n            },\n            {\n                \"name\": \"Lifecycle Controller\",\n                \"description\": \"Represents Firmware Inventory\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"version\": \"6.10.30.00\",\n                \"updateable\": true\n            }\n        ],\n        \"PCIeDevice\": [\n            {\n                \"id\": \"175-0\",\n                \"name\": \"PERC H750 Adapter\",\n                \"description\": \"PERC H750 Adapter\",\n                \"deviceType\": \"SingleFunction\",\n                \"firmwareVersion\": \"52.16.1-4405\",\n                \"manufacturer\": \"Broadcom / LSI\",\n                \"model\": \"Dell Storage Cntlr. H750  Adp.\",\n                \"partNumber\": \"0HYM6Y\",\n                \"serialNumber\": \"CNFCP0027803L4\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"pcieSlotNumber\": 4,\n                \"pcieSlotLanes\": 16\n            },\n            {\n                \"id\": \"0-28\",\n                \"name\": \"C620 Series Chipset Family PCI Express Root Port #1\",\n                \"description\": \"C620 Series Chipset Family PCI Express Root Port #1\",\n                \"deviceType\": \"MultiFunction\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"3-0\",\n                \"name\": \"Integrated Matrox G200eW3 Graphics Controller\",\n                \"description\": \"Integrated Matrox G200eW3 Graphics Controller\",\n                \"deviceType\": \"SingleFunction\",\n                \"manufacturer\": \"Matrox Electronics Systems Ltd.\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"0-31\",\n                \"name\": \"C621 Series Chipset LPC/eSPI Controller\",\n                \"description\": \"C621 Series Chipset LPC/eSPI Controller\",\n                \"deviceType\": \"MultiFunction\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"0-17\",\n                \"name\": \"C620 Series Chipset Family SSATA Controller [AHCI mode]\",\n                \"description\": \"C620 Series Chipset Family SSATA Controller [AHCI mode]\",\n                \"deviceType\": \"MultiFunction\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"0-0\",\n                \"name\": \"Sky Lake-E DMI3 Registers\",\n                \"description\": \"Sky Lake-E DMI3 Registers\",\n                \"deviceType\": \"SingleFunction\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"24-0\",\n                \"name\": \"BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller\",\n                \"description\": \"BCM57416 NetXtreme-E Dual-Media 10G RDMA Ethernet Controller\",\n                \"deviceType\": \"MultiFunction\",\n                \"firmwareVersion\": \"22.00.07.60\",\n                \"manufacturer\": \"Broadcom Inc. and subsidiaries\",\n                \"model\": \"BRCM 2P 1G BT + 2P 10G BT rNDC\",\n                \"partNumber\": \"01224N\",\n                \"serialNumber\": \"VNFCVBA21H023M\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"1-0\",\n                \"name\": \"NetXtreme BCM5720 Gigabit Ethernet PCIe\",\n                \"description\": \"NetXtreme BCM5720 Gigabit Ethernet PCIe\",\n                \"deviceType\": \"MultiFunction\",\n                \"firmwareVersion\": \"22.00.6\",\n                \"manufacturer\": \"Broadcom Inc. and subsidiaries\",\n                \"model\": \"BRCM 2P 1G BT + 2P 10G BT rNDC\",\n                \"partNumber\": \"01224N\",\n                \"serialNumber\": \"VNFCVBA21H023M\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"59-0\",\n                \"name\": \"Ethernet 25G 4P E810-XXV Adapter\",\n                \"description\": \"Ethernet 25G 4P E810-XXV Adapter\",\n                \"deviceType\": \"MultiFunction\",\n                \"firmwareVersion\": \"20.5.13\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"model\": \"Intel(R) 25GbE 4P E810-XXV Adptr\",\n                \"partNumber\": \"0VK88G\",\n                \"serialNumber\": \"MYFLMIT27Q014G\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"pcieSlotNumber\": 1,\n                \"pcieSlotLanes\": 8\n            },\n            {\n                \"id\": \"0-23\",\n                \"name\": \"C620 Series Chipset Family SATA Controller [AHCI mode]\",\n                \"description\": \"C620 Series Chipset Family SATA Controller [AHCI mode]\",\n                \"deviceType\": \"SingleFunction\",\n                \"manufacturer\": \"Intel Corporation\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            }\n        ],\n        \"power\": [\n            {\n                \"id\": \"Power\",\n                \"description\": \"Power\",\n                \"name\": \"Power\",\n                \"powerControlCount\": 1,\n                \"powerSuppliesCount\": 2,\n                \"voltagesCount\": 42,\n                \"redundancyCount\": 1,\n                \"powerControl\": [\n                    {\n                        \"name\": \"System Power Control\",\n                        \"memberID\": \"0\",\n                        \"powerAllocatedWatts\": 792,\n                        \"powerCapacityWatts\": 1050,\n                        \"powerConsumedWatts\": 187,\n                        \"powerLimit\": {\n                            \"limitException\": \"HardPowerOff\",\n                            \"limitInWatts\": 243\n                        },\n                        \"powerMetrics\": {\n                            \"averageConsumedWatts\": 186,\n                            \"intervalInMin\": 1,\n                            \"maxConsumedWatts\": 260,\n                            \"minConsumedWatts\": 177\n                        },\n                        \"powerRequestedWatts\": 958,\n                        \"status\": {}\n                    }\n                ],\n                \"powerSupplies\": [\n                    {\n                        \"hotPluggable\": true,\n                        \"redundancyCount\": 1,\n                        \"name\": \"PS1 Status\",\n                        \"efficiencyPercent\": 93,\n                        \"firmwareVersion\": \"00.30.C2\",\n                        \"inputRanges\": [\n                            {\n                                \"inputType\": \"AC\",\n                                \"maximumFrequencyHz\": 63,\n                                \"maximumVoltage\": 264,\n                                \"minimumFrequencyHz\": 47,\n                                \"minimumVoltage\": 90,\n                                \"outputWattage\": 750\n                            }\n                        ],\n                        \"lastPowerOutputWatts\": 159.75,\n                        \"lineInputVoltage\": 208,\n                        \"lineInputVoltageType\": \"AC240V\",\n                        \"manufacturer\": \"DELL\",\n                        \"memberID\": \"0\",\n                        \"model\": \"PWR SPLY,750W,RDNT,DELTA\",\n                        \"partNumber\": \"04V8KDA01\",\n                        \"powerCapacityWatts\": 750,\n                        \"PowerInputWatts\": 165.5,\n                        \"powerOutputWatts\": 159.75,\n                        \"powerSupplyType\": \"AC\",\n                        \"redundancy\": [\n                            {\n                                \"maxNumSupported\": 2,\n                                \"minNumNeeded\": 1,\n                                \"redundancySetCount\": 2,\n                                \"name\": \"System Board PS Redundancy\",\n                                \"memberID\": \"0\",\n                                \"mode\": \"N+m\",\n                                \"status\": {\n                                    \"health\": \"OK\",\n                                    \"state\": \"Enabled\"\n                                }\n                            }\n                        ],\n                        \"serialNumber\": \"CNDED0025S2MGQ\",\n                        \"sparePartNumber\": \"04V8KDA01\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"hotPluggable\": true,\n                        \"redundancyCount\": 1,\n                        \"name\": \"PS2 Status\",\n                        \"efficiencyPercent\": 93,\n                        \"firmwareVersion\": \"00.30.C2\",\n                        \"inputRanges\": [\n                            {\n                                \"inputType\": \"AC\",\n                                \"maximumFrequencyHz\": 63,\n                                \"maximumVoltage\": 264,\n                                \"minimumFrequencyHz\": 47,\n                                \"minimumVoltage\": 90,\n                                \"outputWattage\": 750\n                            }\n                        ],\n                        \"lineInputVoltage\": 208,\n                        \"lineInputVoltageType\": \"AC240V\",\n                        \"manufacturer\": \"DELL\",\n                        \"memberID\": \"1\",\n                        \"model\": \"PWR SPLY,750W,RDNT,DELTA\",\n                        \"partNumber\": \"04V8KDA01\",\n                        \"powerCapacityWatts\": 750,\n                        \"PowerInputWatts\": 5,\n                        \"powerSupplyType\": \"AC\",\n                        \"redundancy\": [\n                            {\n                                \"maxNumSupported\": 2,\n                                \"minNumNeeded\": 1,\n                                \"redundancySetCount\": 2,\n                                \"name\": \"System Board PS Redundancy\",\n                                \"memberID\": \"0\",\n                                \"mode\": \"N+m\",\n                                \"status\": {\n                                    \"health\": \"OK\",\n                                    \"state\": \"Enabled\"\n                                }\n                            }\n                        ],\n                        \"serialNumber\": \"CNDED0025S2MGH\",\n                        \"sparePartNumber\": \"04V8KDA01\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    }\n                ],\n                \"voltages\": [\n                    {\n                        \"name\": \"System Board DIMM PG\",\n                        \"memberID\": \"0\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 7,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board NDC PG\",\n                        \"memberID\": \"1\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 8,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board PS1 PG FAIL\",\n                        \"memberID\": \"2\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 9,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board PS2 PG FAIL\",\n                        \"memberID\": \"3\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 10,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board BP0 PG\",\n                        \"memberID\": \"4\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 11,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board BP1 PG\",\n                        \"memberID\": \"5\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 12,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board BP2 PG\",\n                        \"memberID\": \"6\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 13,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board 1.8V SW PG\",\n                        \"memberID\": \"7\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 14,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board 2.5V SW PG\",\n                        \"memberID\": \"8\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 15,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board 5V SW PG\",\n                        \"memberID\": \"9\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 16,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board PVNN SW PG\",\n                        \"memberID\": \"10\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 17,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board VSB11 SW PG\",\n                        \"memberID\": \"11\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 18,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board VSBM SW PG\",\n                        \"memberID\": \"12\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 19,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"System Board 3.3V B PG\",\n                        \"memberID\": \"13\",\n                        \"physicalContext\": \"SystemBoard\",\n                        \"sensorNumber\": 21,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM012 VDDQ PG\",\n                        \"memberID\": \"14\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 36,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM012 VPP PG\",\n                        \"memberID\": \"15\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 37,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM012 VTT PG\",\n                        \"memberID\": \"16\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 38,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM345 VDDQ PG\",\n                        \"memberID\": \"17\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 39,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM345 VPP PG\",\n                        \"memberID\": \"18\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 40,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM345 VTT PG\",\n                        \"memberID\": \"19\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 41,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 VCCIO PG\",\n                        \"memberID\": \"20\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 42,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 VCORE PG\",\n                        \"memberID\": \"21\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 43,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 FIVR PG\",\n                        \"memberID\": \"22\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 44,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM012 VDDQ PG\",\n                        \"memberID\": \"23\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 46,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM012 VPP PG\",\n                        \"memberID\": \"24\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 47,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM012 VTT PG\",\n                        \"memberID\": \"25\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 48,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM345 VDDQ PG\",\n                        \"memberID\": \"26\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 49,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM345 VPP PG\",\n                        \"memberID\": \"27\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 50,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM345 VTT PG\",\n                        \"memberID\": \"28\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 51,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 VCCIO PG\",\n                        \"memberID\": \"29\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 52,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 VCORE PG\",\n                        \"memberID\": \"30\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 53,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 FIVR PG\",\n                        \"memberID\": \"31\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 54,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"PS1 Voltage 1\",\n                        \"memberID\": \"32\",\n                        \"readingVolts\": 208,\n                        \"physicalContext\": \"PowerSupply\",\n                        \"sensorNumber\": 109,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"PS2 Voltage 2\",\n                        \"memberID\": \"33\",\n                        \"readingVolts\": 208,\n                        \"physicalContext\": \"PowerSupply\",\n                        \"sensorNumber\": 110,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 VSA PG\",\n                        \"memberID\": \"34\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 45,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 VSA PG\",\n                        \"memberID\": \"35\",\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 55,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 VCORE VR\",\n                        \"memberID\": \"36\",\n                        \"readingVolts\": 1,\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 23,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 VCORE VR\",\n                        \"memberID\": \"37\",\n                        \"readingVolts\": 1,\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 24,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM012 VR\",\n                        \"memberID\": \"38\",\n                        \"readingVolts\": 1,\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 26,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU1 MEM345 VR\",\n                        \"memberID\": \"39\",\n                        \"readingVolts\": 1,\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 27,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM012 VR\",\n                        \"memberID\": \"40\",\n                        \"readingVolts\": 1,\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 28,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    },\n                    {\n                        \"name\": \"CPU2 MEM345 VR\",\n                        \"memberID\": \"41\",\n                        \"readingVolts\": 1,\n                        \"physicalContext\": \"CPU\",\n                        \"sensorNumber\": 29,\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    }\n                ],\n                \"redundancy\": [\n                    {\n                        \"maxNumSupported\": 2,\n                        \"minNumNeeded\": 1,\n                        \"redundancySetCount\": 2,\n                        \"name\": \"System Board PS Redundancy\",\n                        \"memberID\": \"0\",\n                        \"mode\": \"N+m\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        }\n                    }\n                ]\n            }\n        ],\n        \"bmc\": [\n            {\n                \"firmwareVersion\": \"6.10.30.00\",\n                \"vMedia\": [\n                    {\n                        \"connectedVia\": \"NotConnected\",\n                        \"name\": \"Virtual Removable Disk\",\n                        \"mediaTypes\": [\n                            \"USBStick\"\n                        ]\n                    },\n                    {\n                        \"connectedVia\": \"NotConnected\",\n                        \"name\": \"Virtual CD\",\n                        \"mediaTypes\": [\n                            \"CD\",\n                            \"DVD\"\n                        ]\n                    }\n                ],\n                \"model\": \"14G Monolithic\",\n                \"powerState\": \"On\",\n                \"uuid\": \"3352394f-c0b1-5980-3110-00534c4c4544\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                },\n                \"nicDetails\": [\n                    {\n                        \"interfaceEnabled\": true,\n                        \"ipV4Add\": [\n                            {\n                                \"address\": \"10.239.7.5\",\n                                \"addressOrigin\": \"Static\",\n                                \"gateway\": \"10.239.7.1\",\n                                \"subnetMask\": \"255.255.255.192\"\n                            }\n                        ],\n                        \"nameServers\": [\n                            \"0.0.0.0\",\n                            \"0.0.0.0\"\n                        ],\n                        \"vlanDetail\": {},\n                        \"hostName\": \"idrac-1S1Y9R3\",\n                        \"mtuSize\": 1500,\n                        \"speedMbps\": 1000,\n                        \"permanentMACAddress\": \"c8:4b:d6:7c:b4:0e\",\n                        \"status\": {\n                            \"health\": \"OK\",\n                            \"state\": \"Enabled\"\n                        },\n                        \"ipV6Add\": [\n                            {\n                                \"Address\": \"2307::5\",\n                                \"AddressOrigin\": \"Static\",\n                                \"AddressState\": \"Preferred\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"AddressState\": \"Preferred\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"::\",\n                                \"PrefixLength\": 64\n                            },\n                            {\n                                \"Address\": \"fe80::9117:f7e:3b50:caed\",\n                                \"AddressState\": \"Preferred\",\n                                \"PrefixLength\": 64\n                            }\n                        ]\n                    }\n                ],\n                \"ntpSettings\": {\n                    \"protocolEnabled\": false\n                },\n                \"bmcUsers\": [\n                    {\n                        \"enabled\": true,\n                        \"userName\": \"root\",\n                        \"roleId\": \"Administrator\"\n                    }\n                ],\n                \"licenses\": [\n                    {\n                        \"licenseDescription\": \"iDRAC9 Enterprise License\"\n                    }\n                ],\n                \"attributes\": {\n                    \"topologyLLDP\": \"Disabled\",\n                    \"ipmiLanEnable\": \"Enabled\",\n                    \"osBmcPassThroughState\": \"Disabled\",\n                    \"timeZone\": \"CST6CDT\",\n                    \"vlanEnable\": \"Disabled\",\n                    \"vlanID\": 1,\n                    \"snmpDiscoveryPortNumber\": 161,\n                    \"snmpAgentEnable\": \"Enabled\",\n                    \"snmpAgentCommunityName\": \"public\",\n                    \"snmpProtocol\": \"All\",\n                    \"virtualConsolePluginType\": \"eHTML5\",\n                    \"serialRedirectEnable\": \"Enabled\",\n                    \"rfsIgnoreCertWarning\": \"Yes\",\n                    \"dNSRacName\": \"idrac-1S1Y9R3\",\n                    \"dNSDomainName\": \"\"\n                }\n            }\n        ],\n        \"boot\": [\n            {\n                \"bootOrder\": [\n                    \"RAID.Slot.4-1\",\n                    \"NIC.PxeDevice.1-1\",\n                    \"NIC.PxeDevice.2-1\"\n                ],\n                \"bootSourceOverrideEnabled\": \"Disabled\",\n                \"bootSourceOverrideMode\": \"UEFI\",\n                \"bootSourceOverrideTarget\": \"None\"\n            }\n        ],\n        \"ethernetInterface\": [\n            {\n                \"id\": \"NIC.Integrated.1-3-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"Integrated NIC 1 Port 3 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"5C:6F:69:26:DC:EC\",\n                \"permanentMACAddress\": \"5C:6F:69:26:DC:EC\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"autoNeg\": true,\n                \"id\": \"NIC.Integrated.1-2-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"Integrated NIC 1 Port 2 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"5C:6F:69:26:DC:EF\",\n                \"permanentMACAddress\": \"5C:6F:69:26:DC:EF\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"autoNeg\": true,\n                \"id\": \"NIC.Integrated.1-1-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"Integrated NIC 1 Port 1 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"5C:6F:69:26:DC:EE\",\n                \"permanentMACAddress\": \"5C:6F:69:26:DC:EE\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"NIC.Integrated.1-4-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"Integrated NIC 1 Port 4 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"5C:6F:69:26:DC:ED\",\n                \"permanentMACAddress\": \"5C:6F:69:26:DC:ED\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"NIC.Slot.1-2-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"NIC in Slot 1 Port 2 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"40:A6:B7:A0:FD:E1\",\n                \"permanentMACAddress\": \"40:A6:B7:A0:FD:E1\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"autoNeg\": true,\n                \"id\": \"NIC.Slot.1-1-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"NIC in Slot 1 Port 1 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkUp\",\n                \"macAddress\": \"40:A6:B7:A0:FD:E0\",\n                \"speedMbps\": 25000,\n                \"permanentMACAddress\": \"40:A6:B7:A0:FD:E0\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"NIC.Slot.1-3-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"NIC in Slot 1 Port 3 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"40:A6:B7:A0:FD:E2\",\n                \"permanentMACAddress\": \"40:A6:B7:A0:FD:E2\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            },\n            {\n                \"id\": \"NIC.Slot.1-4-1\",\n                \"name\": \"System Ethernet Interface\",\n                \"description\": \"NIC in Slot 1 Port 4 Partition 1\",\n                \"ethernetInterfaceType\": \"Physical\",\n                \"linkStatus\": \"LinkDown\",\n                \"macAddress\": \"40:A6:B7:A0:FD:E3\",\n                \"permanentMACAddress\": \"40:A6:B7:A0:FD:E3\",\n                \"status\": {\n                    \"health\": \"OK\",\n                    \"state\": \"Enabled\"\n                }\n            }\n        ],\n        \"location\": {\n            \"info\": \";;;;0\",\n            \"infoFormat\": \"DataCenter;RoomName;Aisle;RackName;RackSlot\",\n            \"partLocation\": {},\n            \"placement\": {\n                \"rack\": \"\",\n                \"row\": \"\"\n            },\n            \"postalAddress\": {\n                \"building\": \"\",\n                \"room\": \"\"\n            }\n        },\n        \"osDetails\": {},\n        \"raidConversionResponse\": {},\n        \"scpDetails\": {},\n        \"osVolumeDetails\": {\n            \"sasAddress\": \"sas.5f4ee0803b7ea800\",\n            \"target\": \"239\",\n            \"deviceType\": \"raid\",\n            \"osInstallVolumeFQDD\": \"RAID.Slot.4-1\"\n        },\n        \"InitializationCompleted\": true,\n        \"factoryResetCompleted\": {},\n        \"raidFlags\": {},\n        \"TotalSystemMemory\": 768,\n        \"maxDIMMSlots\": 24,\n        \"failureRetries\": 7,\n        \"FailureBackOffTimeToRetry\": \"2024-07-10T15:56:02.942176878Z\",\n        \"metric\": {},\n        \"decommission\": {},\n        \"errors\": [\n            \"failed to verify OS installation Error Code: DELL-DTIAS-RFSKUPK-01804 Message: OS Install Verification failed\",\n            \"failed to verify OS installation failed to verify OS installation Error Code: DELL-DTIAS-RFSKUPK-01804 Message: OS Install Verification failed\"\n        ],\n        \"ipAddress\": \"10.239.7.5\",\n        \"totalCores\": 48,\n        \"numOfProcessors\": 2,\n        \"audit\": {\n            \"drift\": {\n                \"firmwareVersion\": {},\n                \"coreCount\": {},\n                \"hwModel\": {}\n            }\n        },\n        \"bmcLogForward\": {\n            \"serviceEnabled\": \"Enabled\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get FS Folder Contents",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{dtias_ip}}/v1/tenants/default_tenant/fs/files?FolderPath=firmware",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"fs",
+						"files"
+					],
+					"query": [
+						{
+							"key": "FolderPath",
+							"value": "firmware"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Deployment ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{dtias_ip}}/v1/tenants/default_tenant/search/deployments/real-server",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"search",
+						"deployments",
+						"real-server"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get job status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{dtias_ip}}/v1/tenants/default_tenant/search/job/f546d1a4-f414-44e8-a03c-5d7a52026ed4",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"search",
+						"job",
+						"f546d1a4-f414-44e8-a03c-5d7a52026ed4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https:///v1/tenants/default_tenant/resources",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ResourceType\": {\r\n        \"Id\": \"ResourceComputeBmo3\",\r\n        \"Name\": \"ResourceComputeBmo_3\",\r\n        \"Description\": \"Resource Compute\",\r\n        \"Vendor\": \"Dell\",\r\n        \"Model\": \"PowerEdge\",\r\n        \"Version\": \"G15\",\r\n        \"ResKind\": \"Physical\",\r\n        \"ResClass\": \"COMPUTE\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{dtias_ip}}/v1/tenants/default_tenant/resourcetypes",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"resourcetypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File Upload",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "FileName",
+							"type": "file",
+							"src": "/C:/Users/derrbm1/Downloads/SAS-RAID_Firmware_YGV5R_WN64_8.8.0.0.18-26_A04.EXE"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://10.239.7.116/v1/tenants/default_tenant/fs/files/upload/firmware?force=True",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"116"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"fs",
+						"files",
+						"upload",
+						"firmware"
+					],
+					"query": [
+						{
+							"key": "force",
+							"value": "True"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Install Application",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ApplicationName\": \"telemetry\",\r\n    \"ApplicationPackageURL\": \"http://10.239.7.89/data/applications/flcm-telemetry-app-v2.1.0-rc.5.tar.gz\",\r\n    \"Install\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.89/v1/tenants/default_tenant/application",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"89"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"application"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Secrets",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{dtias_ip}}/api/v1/tenant/default_tenants/resources/secrets",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tenant",
+						"default_tenants",
+						"resources",
+						"secrets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Telemetry RP",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ResourceProfile\": {\r\n        \"Name\": \"test-rpf1\",\r\n        \"Description\": \"test desc\",\r\n        \"Version\": \"v1\",\r\n        \"ResourceProfileTypeId\": \"ResourceProfileType\",\r\n        \"ResourceProfileAttribute\": {\r\n            \"MonitoringProfile\": {\r\n                \"AlertProfile\": {\r\n                    \"DeliveryRetryAttempts\": 10,\r\n                    \"DeliveryRetryIntervalInSeconds\": 10,\r\n                    \"IgnoreCertificateErrors\": true,\r\n                    \"ServiceEnable\": true,\r\n                    \"Alerts\": {\r\n                        \"SystemHealth\": {\r\n                            \"Severity\": [\r\n                                \"Informational\",\r\n                                \"Warning\",\r\n                                \"Critical\"\r\n                            ]\r\n                        },\r\n                        \"Storage\": {\r\n                            \"Severity\": [\r\n                                \"Informational\",\r\n                                \"Warning\",\r\n                                \"Critical\"\r\n                            ]\r\n                        },\r\n                        \"Updates\": {\r\n                            \"Severity\": [\r\n                                \"Informational\",\r\n                                \"Warning\",\r\n                                \"Critical\"\r\n                            ]\r\n                        },\r\n                        \"Audit\": {\r\n                            \"Severity\": [\r\n                                \"Informational\",\r\n                                \"Warning\",\r\n                                \"Critical\"\r\n                            ]\r\n                        },\r\n                        \"Configuration\": {\r\n                            \"Severity\": [\r\n                                \"Informational\",\r\n                                \"Warning\",\r\n                                \"Critical\"\r\n                            ]\r\n                        }\r\n                    }\r\n                },\r\n                \"MetricProfile\": {\r\n                    \"serviceEnable\": true,\r\n                    \"report\": {\r\n                        \"AggregationMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"CPUMemMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"CPURegisters\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"CPUSensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"FCPortStatistics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"FCSensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"FPGASensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"FanSensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"GPUMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"GPUStatistics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"MemorySensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"NICSensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"NICStatistics\": {\r\n                            \"metricReportState\": \"Disabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"NVMeSMARTData\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"PSUMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"PowerMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"PowerStatistics\": {\r\n                            \"metricReportState\": \"Disabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"Sensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"SerialLog\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\"\r\n                        },\r\n                        \"StorageDiskSMARTData\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        },\r\n                        \"StorageSensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        },\r\n                        \"SystemUsage\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        },\r\n                        \"ThermalMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        },\r\n                        \"ThermalSensor\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        },\r\n\r\n                        \"MemoryMetrics\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        },\r\n\r\n                        \"SFPTransceiver\": {\r\n                            \"metricReportState\": \"Enabled\",\r\n                            \"recurrenceInterval\": \"PT0H0M0S\",\r\n                            \"metricReportHeartbeatInterval\": \"PT0H0M0S\",\r\n                            \"metricReportType\": \"Periodic\",\r\n                            \"reportUpdates\": \"Overwrite\",\r\n                            \"reportTimeSpan\": \"PT0H0M15S\",\r\n                            \"reportActions\": [\r\n                                \"LogToMetricReportsCollection\",\r\n                                \"RedfishEvent\"\r\n                            ],\r\n                            \"suppressRepeatedMetricValue\": \"Disabled\"\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{dtias_ip}}/v1/tenants/default_tenant/resourceprofiles",
+					"protocol": "https",
+					"host": [
+						"{{dtias_ip}}"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"resourceprofiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Resource Deployment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Resource\": {\r\n        \"aState\": \"UNLOCKED\",\r\n        \"BmoId\": \"dtias96cp1\",\r\n        \"Description\": \"Resource Compute\",\r\n        \"GlobalAssetId\": \"32DZ4K3\",\r\n        \"Id\": \"32DZ4K3\",\r\n        \"Name\": \"server1\",\r\n        \"opState\": \"ENABLED\",\r\n        \"public\": \"TRUE\",\r\n        \"ResourcePoolId\": \"rp_dp\",\r\n        \"ResourceTypeId\": \"rt_compute_dp\",\r\n        \"ResourceProfileId\": \"test-rpf1\",\r\n        \"ResType\": \"COMPUTE\",\r\n        \"SiteId\": \"gc-site\",\r\n        \"uState\": \"IDLE\",\r\n        \"ResourceAttribute\": {\r\n            \"compute\": {\r\n                \"lom\": {\r\n                    \"ipAddress\": \"https://10.239.6.18\",\r\n                    \"password\": \"compute_32DZ4K3\"\r\n                }\r\n            }\r\n        },\r\n        \"Extensions\" : {\r\n                }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.96/v1/tenants/default_tenant/resources",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"96"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"resources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Resource Deployment with FW Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Resource\": {\r\n        \"aState\": \"UNLOCKED\",\r\n        \"BmoId\": \"dtias84cp1\",\r\n        \"Description\": \"Resource Compute\",\r\n        \"GlobalAssetId\": \"42DZ4K3\",\r\n        \"Id\": \"server1_dp\",\r\n        \"Name\": \"server1\",\r\n        \"opState\": \"ENABLED\",\r\n        \"public\": \"TRUE\",\r\n        \"ResourcePoolId\": \"rp_dp\",\r\n        \"ResourceTypeId\": \"rt_compute_dp\",\r\n        \"ResourceProfileID\": \"test-rpf1\",\r\n        \"ResType\": \"COMPUTE\",\r\n        \"SiteId\": \"gc-site\",\r\n        \"uState\": \"IDLE\",\r\n        \"Labels\":[{\"monitoring\":\"TRUE\"}],\r\n        \"ResourceAttribute\": {\r\n            \"compute\": {\r\n                \"lom\": {\r\n                    \"ipAddress\": \"https://10.239.6.20\",\r\n                    \"password\": \"compute_42DZ4K3\"\r\n                }\r\n            }\r\n        },\r\n        \"Extensions\" : {\r\n            \"compute_config\": {\r\n                \"bmo_server_spec\": {\r\n                    \"firmwareNames\": [\r\n                        \"bios\"\r\n                    ]\r\n                }\r\n            },\r\n            \"media_config\": {\r\n                \"firmware\":[\r\n                {\r\n                    \"name\": \"bios\",\r\n                    \"category\": \"BIOS\",\r\n                    \"filePath\": \"firmware/BIOS_T3H20_WN64_1.13.2.EXE\",\r\n                    \"model\": \"r650\",\r\n                    \"version\": \"1.13.2\",\r\n                    \"vendor\": \"dell\"\r\n                }\r\n            ]\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.84/v1/tenants/default_tenant/resources",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"84"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"resources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Job Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"JobId\": \"8581dc02-5b9a-40f2-9db7-1044f42d2eac\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.96/v1/tenants/default_tenant/job",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"96"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"job"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a resource with new FW",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json+patch",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"ResourceName\": \"server3_dp\",\r\n        \"Resource\":[ {\r\n            \"Op\": \"add\",\r\n            \"Path\": \"/Resource/ResourceAttribute/firmware\",\r\n            \"Value\": [\r\n                {\r\n                    \"name\": \"bios\",\r\n                    \"category\": \"BIOS\",\r\n                    \"filePath\": \"firmware/BIOS_T3H20_WN64_1.13.2.EXE\",\r\n                    \"model\": \"r650\",\r\n                    \"version\": \"1.13.2\",\r\n                    \"vendor\": \"dell\"\r\n \r\n                }\r\n \r\n            ]\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.84/v1/tenants/default_tenant/resources",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"84"
+					],
+					"path": [
+						"v1",
+						"tenants",
+						"default_tenant",
+						"resources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Server Resource",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bmo_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://10.239.7.96/api/v1/tenant/metalweaver/resources/servers/server1",
+					"protocol": "https",
+					"host": [
+						"10",
+						"239",
+						"7",
+						"96"
+					],
+					"path": [
+						"api",
+						"v1",
+						"tenant",
+						"metalweaver",
+						"resources",
+						"servers",
+						"server1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

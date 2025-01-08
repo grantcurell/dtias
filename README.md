@@ -8,7 +8,8 @@
   - [DTIAS on Ubuntu 20.04 Prerequisites](#dtias-on-ubuntu-2004-prerequisites)
   - [DTIAS on RHEL Prerequisites](#dtias-on-rhel-prerequisites)
   - [DTIAS Single Node Installation](#dtias-single-node-installation)
-  - [Building a DTIAS VM](#building-a-dtias-vm)
+  - [Set Up a Baseline - Console Redirection](#set-up-a-baseline---console-redirection)
+  - [How to Setup Telemetry](#how-to-setup-telemetry)
 
 ## What is DTIAS?
 
@@ -104,7 +105,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker.service
 ```
 
-Create the following script and run it.
+Create the following script and run it. You will need to run this as sudo.
 
 ```bash
 #!/bin/bash
@@ -183,7 +184,7 @@ sudo bash -c "echo 'Cmnd_Alias BIN=/usr/bin/systemctl,/usr/sbin/lvm,/usr/bin/mkd
 
 
 
-sudo dnf --setopt=tsflags=noscripts install iscsi-initiator-utils
+sudo dnf --setopt=tsflags=noscripts install -y iscsi-initiator-utils
 echo "InitiatorName=$(/sbin/iscsi-iname)" > /etc/iscsi/initiatorname.iscsi
 sudo systemctl enable iscsid
 sudo systemctl start iscsid
@@ -386,7 +387,24 @@ dualstack: false
   role: controller
 ```
 
+## Set Up a Baseline - Console Redirection
 
-## Building a DTIAS VM
+For the baseline install to work, DTIAS has to be able to talk to the running operating system. DTIAS accomplishes this via console redirection. We are working to fix this, but currently, the iDRAC does not consistently present the console redirection options. Subsequently, to get the baseline installation to work, you need to make sure that the BIOS settings for your baseline in DTIAS match the iDRAC's console redirection settings. For example, if your iDRAC's console redirection settings are (found under Configuration->BIOS Settings->Serial Communication):
 
-See [How to Build DTIAS VM](./BUILD_VM.md)
+![](images/2025-01-08-12-42-43.png)
+
+Then you will need the following in your DTIAS baseline config:
+
+![](images/2025-01-08-12-50-03.png)
+
+What is happening under the hood is that when the installation completes it sends the message, "SOL verify complete" out on the console, DTIAS captures this, and then knows it can continue. 
+
+## How to Setup Telemetry
+
+To set up telemetry, go to the DTIAS installer directory that has the file `flcm-telemetry-app-v2.1.0-rc.17.tar.gz`. Then run the command:
+
+```bash
+DTIAS_USER=<dtias_user> DTIAS_PASSWORD=<dtias_password> APPLICATION_HIGH_AVAILABILITY=false TELE_BUNDLE=<telemetry_bundle_name>.tar.gz DTIAS_DOCKER_HOST=<CP1 IP> DTIAS_DOCKER_PORT=2376 make install_telemetry
+```
+
+If you need to uninstall telemetry due to a failed install or some other reason, run `make uninstall_telemetry`
